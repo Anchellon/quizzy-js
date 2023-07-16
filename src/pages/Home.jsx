@@ -1,9 +1,9 @@
 import Button from "react-bootstrap/esm/Button";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import QuizzesTable from "../components/QuizzesTable";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 export default function Home() {
   const [show, setShow] = useState(false);
 
