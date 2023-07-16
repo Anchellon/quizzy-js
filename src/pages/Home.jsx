@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import QuizzesTable from "../components/QuizzesTable";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 export default function Home() {
   const [show, setShow] = useState(false);
 

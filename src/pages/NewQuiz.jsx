@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "react-bootstrap";
 import QuestionsTable from "../components/QuestionsTable";
 import { useForm } from "react-hook-form";
@@ -15,7 +15,7 @@ export default function NewQuiz() {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit: Function = (data: string) => {
+  const onSubmit = (data) => {
     console.log(data);
   }; // your form submit function which will invoke after successful validation
 
