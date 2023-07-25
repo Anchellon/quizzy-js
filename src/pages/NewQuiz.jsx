@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import QuestionsTable from "../components/QuestionsTable";
 import { useForm } from "react-hook-form";
+import Form from "react-bootstrap/Form";
 
 import Modal from "react-bootstrap/Modal";
 export default function NewQuiz() {
@@ -29,27 +30,25 @@ export default function NewQuiz() {
         <Modal.Header closeButton>
           <Modal.Title>Create Question Setup</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {/* register your input into the hook by invoking the "register" function */}
-            <input defaultValue="test" {...register("example")} />
-
-            {/* include validation with required or other standard HTML validation rules */}
-            <input {...register("exampleRequired", { required: true })} />
-            {/* errors will return when field validation fails  */}
-            {errors.exampleRequired && <p>This field is required</p>}
-
-            <input type="submit" />
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Create Quiz
-          </Button>
-        </Modal.Footer>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Modal.Body>
+            <Form.Control
+              {...register("questionText")}
+              type="text"
+              id="question-text"
+              aria-describedby="questionText"
+              placeholder="Enter Question Text"
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Create Quiz
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
       <Button className="float-end" size="lg" onClick={handleShow}>
         Add Question +
