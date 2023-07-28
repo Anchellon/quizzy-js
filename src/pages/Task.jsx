@@ -8,18 +8,20 @@ export default function Task(props) {
     marginBottom: "8px",
     backgroundColor: "white",
   };
-  //   console.log(props);
   return (
-    <Draggable draggableId={props.task.id} index={props.index}>
+    <Draggable
+      key={props.keyVal}
+      draggableId={props.task.id}
+      index={props.index}
+    >
       {(provided) => {
         return (
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            style={taskStyle}
           >
-            {props.task.content}
+            <div style={taskStyle}>{props.task.content}</div>
           </div>
         );
       }}
