@@ -2,17 +2,29 @@ import Form from "react-bootstrap/Form";
 import { useForm, useFieldArray } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 export const NewQuestion = ({ show, handleClose }) => {
+    const reorder = (result) => {
+        console.log(result);
+        const { source, destination } = result;
+        if (!destination) {
+            return;
+        }
+        const sourceIndex = source.index;
+        const destIndex = destination.index;
+        move(sourceIndex, destIndex);
+    };
+
     const { register, control, handleSubmit } = useForm({
         defaultValues: {
             options: [{ optionText: "" }],
         },
     });
-    const { fields, append, remove } = useFieldArray({
+    const { fields, append, remove, move } = useFieldArray({
         control,
         name: "options",
     });
-    // console.log(show);
+    console.log(fields);
     const onSubmit = (data) => {
         console.log(data);
     };
@@ -39,38 +51,81 @@ export const NewQuestion = ({ show, handleClose }) => {
 
                 <Modal.Body>
                     List of options
-                    <div>
-                        {fields.map((field, index) => {
-                            return (
-                                <div key={field.id}>
-                                    <Form.Control
-                                        type="text"
-                                        key={field.id}
-                                        placeholder="Add Option"
-                                        {...register(
-                                            `options.$(index).optionText`
-                                        )}
-                                    ></Form.Control>
-                                    {index > 0 && (
+                    <DragDropContext onDragEnd={reorder}>
+                        <Droppable droppableId="parent">
+                            {(provided) => (
+                                <div
+                                    ref={provided.innerRef}
+                                    {...provided.droppableProps}
+                                >
+                                    {fields.map((field, index) => {
+                                        return (
+                                            <Draggable
+                                                key={field.id}
+                                                draggableId={field.id}
+                                                index={index}
+                                            >
+                                                {(provided) => (
+                                                    <div
+                                                        key={field.id}
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}
+                                                    >
+                                                        {/* <Form.Control
+                                                            type="text"
+                                                            key={field.id}
+                                                            placeholder="Add Option"
+                                                            _ref={
+                                                                ...register(
+                                                                    `options.${index}.optionText`
+                                                                )
+                                                            }
+                                                        ></Form.Control>
+                                                        Broken work on it Later 
+                                                        
+                                                        */}
+                                                        <div>
+                                                            <input
+                                                                type="text"
+                                                                {...register(
+                                                                    `options.${index}.optionText`
+                                                                )}
+                                                            ></input>
+                                                        </div>
+                                                        {index > 0 && (
+                                                            <Button
+                                                                type="button"
+                                                                onClick={() =>
+                                                                    remove(
+                                                                        index
+                                                                    )
+                                                                }
+                                                            >
+                                                                remove
+                                                            </Button>
+                                                        )}
+                                                    </div>
+                                                )}
+                                            </Draggable>
+                                        );
+                                    })}
+                                    {
                                         <Button
                                             type="button"
-                                            onClick={() => remove(index)}
+                                            onClick={() =>
+                                                append({ optionText: "" })
+                                            }
                                         >
-                                            remove
+                                            Add option
                                         </Button>
-                                    )}
+                                    }
+
+                                    {provided.placeholder}
                                 </div>
-                            );
-                        })}
-                        {
-                            <Button
-                                type="button"
-                                onClick={() => append({ optionText: "" })}
-                            >
-                                Add option
-                            </Button>
-                        }
-                    </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
