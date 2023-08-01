@@ -1,25 +1,36 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SharedLayout from "./pages/SharedLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import NewQuiz from "./pages/NewQuiz";
 import DraggableComponent from "./pages/draggableComponent";
 import DynamicForm from "./pages/DynamicForm";
-
+import Quiz, { loader as quizLoader } from "./pages/Quiz";
+import {
+    createBrowserRouter,
+    createRoutesFromElements,
+    RouterProvider,
+    Route,
+} from "react-router-dom";
+import "../server";
+const router = createBrowserRouter(
+    createRoutesFromElements(
+        <Route path="/" element={<SharedLayout />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route
+                path="quiz/:id"
+                element={<Quiz />}
+                loader={async ({ params }) => {
+                    let data = await quizLoader(params.id);
+                    return data;
+                }}
+            />
+            <Route path="test" element={<DynamicForm />} />
+            <Route path="drag" element={<DraggableComponent />} />
+        </Route>
+    )
+);
 function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<SharedLayout />}>
-                    <Route index element={<Home />} />
-                    <Route path="about" element={<About />} />
-                    <Route path="create-quiz" element={<NewQuiz />} />
-                    <Route path="test" element={<DynamicForm />} />
-                    <Route path="drag" element={<DraggableComponent />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
-    );
+    return <RouterProvider router={router} />;
 }
 
 export default App;
