@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import QuestionsTable from "../components/QuestionsTable";
 
 import { NewQuestion } from "./NewQuestion";
-export default function NewQuiz() {
+export default function Quiz() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
 
