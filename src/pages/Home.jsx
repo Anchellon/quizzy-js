@@ -2,8 +2,7 @@ import Button from "react-bootstrap/esm/Button";
 // import { Link } from "react-router-dom";
 import QuizzesTable from "../components/QuizzesTable";
 import { useState } from "react";
-import Modal from "react-bootstrap/Modal";
-// import { useForm } from "react-hook-form";
+import { NewQuizModal } from "../components/NewQuizModal";
 export default function Home() {
     const [show, setShow] = useState(false);
 
@@ -16,20 +15,7 @@ export default function Home() {
             <Button className="float-end" size="lg" onClick={handleShow}>
                 Add Quiz +
             </Button>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Enter Quiz Name</Modal.Title>
-                </Modal.Header>
-                <Modal.Body></Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Create Quiz
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            <NewQuizModal show={show} handleClose={handleClose}></NewQuizModal>
             <QuizzesTable />
             {/* </Link> */}
         </div>
