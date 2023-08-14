@@ -3,7 +3,13 @@ import { Button } from "react-bootstrap";
 import QuestionsTable from "../components/QuestionsTable";
 import { useLoaderData } from "react-router-dom";
 export async function loader(id) {
-    const res = await fetch(`/api/quiz/${id}`);
+    const res = await fetch(`http://localhost:3000/catalog/quiz/${id}`, {
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+        },
+    });
     if (!res.ok) {
         throw {
             message: "Failed to fetch quizes",

@@ -10,7 +10,7 @@ import {
     RouterProvider,
     Route,
 } from "react-router-dom";
-import "../server";
+// import "../server";
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<SharedLayout />}>
