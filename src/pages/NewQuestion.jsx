@@ -3,21 +3,28 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DevTool } from "@hookform/devtools";
 export const NewQuestion = ({ show, handleClose }) => {
     const reorder = (result) => {
+        console.log("results are");
         console.log(result);
+        console.log("end results");
         const { source, destination } = result;
         if (!destination) {
             return;
         }
+
         const sourceIndex = source.index;
         const destIndex = destination.index;
+
+        setValue("isCorrect", destIndex);
         move(sourceIndex, destIndex);
     };
 
-    const { register, control, handleSubmit } = useForm({
+    const { register, control, handleSubmit, setValue, getValues } = useForm({
         defaultValues: {
             options: [{ optionText: "" }],
+            // isCorrect: null,
         },
     });
     const { fields, append, remove, move } = useFieldArray({
@@ -35,7 +42,7 @@ export const NewQuestion = ({ show, handleClose }) => {
                 handleClose();
             }}
         >
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         Create Question Setup
@@ -92,15 +99,41 @@ export const NewQuestion = ({ show, handleClose }) => {
                                                                     `options.${index}.optionText`
                                                                 )}
                                                             ></input>
+                                                            <input
+                                                                type="radio"
+                                                                {...register(
+                                                                    "isCorrect",
+                                                                    {
+                                                                        required:
+                                                                            {
+                                                                                value: true,
+                                                                                message:
+                                                                                    "Please select a correct answer",
+                                                                            },
+                                                                    }
+                                                                )}
+                                                                value={index}
+                                                            ></input>
                                                         </div>
                                                         {index > 0 && (
                                                             <Button
                                                                 type="button"
-                                                                onClick={() =>
+                                                                onClick={() => {
+                                                                    if (
+                                                                        getValues(
+                                                                            "isCorrect"
+                                                                        ) ==
+                                                                        index
+                                                                    ) {
+                                                                        setValue(
+                                                                            "isCorrect",
+                                                                            null
+                                                                        );
+                                                                    }
                                                                     remove(
                                                                         index
-                                                                    )
-                                                                }
+                                                                    );
+                                                                }}
                                                             >
                                                                 remove
                                                             </Button>
@@ -141,6 +174,7 @@ export const NewQuestion = ({ show, handleClose }) => {
                     </Button>
                 </Modal.Footer>
             </Form>
+            <DevTool control={control} />
         </Modal>
     );
 };
