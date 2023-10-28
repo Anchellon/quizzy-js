@@ -57,7 +57,7 @@ export const NewQuestion = ({ show, handleClose }) => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    List of options
+                    List of options ( Mark the correct option )
                     <DragDropContext onDragEnd={reorder}>
                         <Droppable droppableId="parent">
                             {(provided) => (
@@ -94,12 +94,6 @@ export const NewQuestion = ({ show, handleClose }) => {
                                                         */}
                                                         <div>
                                                             <input
-                                                                type="text"
-                                                                {...register(
-                                                                    `options.${index}.optionText`
-                                                                )}
-                                                            ></input>
-                                                            <input
                                                                 type="radio"
                                                                 {...register(
                                                                     "isCorrect",
@@ -114,30 +108,36 @@ export const NewQuestion = ({ show, handleClose }) => {
                                                                 )}
                                                                 value={index}
                                                             ></input>
-                                                        </div>
-                                                        {index > 0 && (
-                                                            <Button
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    if (
-                                                                        getValues(
-                                                                            "isCorrect"
-                                                                        ) ==
-                                                                        index
-                                                                    ) {
-                                                                        setValue(
-                                                                            "isCorrect",
-                                                                            null
+                                                            <input
+                                                                type="text"
+                                                                {...register(
+                                                                    `options.${index}.optionText`
+                                                                )}
+                                                            ></input>
+                                                            {index > 0 && (
+                                                                <Button
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        if (
+                                                                            getValues(
+                                                                                "isCorrect"
+                                                                            ) ==
+                                                                            index
+                                                                        ) {
+                                                                            setValue(
+                                                                                "isCorrect",
+                                                                                null
+                                                                            );
+                                                                        }
+                                                                        remove(
+                                                                            index
                                                                         );
-                                                                    }
-                                                                    remove(
-                                                                        index
-                                                                    );
-                                                                }}
-                                                            >
-                                                                remove
-                                                            </Button>
-                                                        )}
+                                                                    }}
+                                                                >
+                                                                    remove
+                                                                </Button>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 )}
                                             </Draggable>
