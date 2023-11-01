@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import QuestionsTable from "../components/QuestionsTable";
 import { useLoaderData } from "react-router-dom";
 export async function loader(id) {
-    const res = await fetch(`http://localhost:3000/catalog/quiz/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/quiz/${id}`, {
         mode: "cors",
         headers: {
             "Content-Type": "application/json",
@@ -29,6 +29,8 @@ export default function Quiz() {
 
     const data = useLoaderData();
     console.log(data);
+    let qnId = data.quiz._id;
+    console.log(qnId);
     // your form submit function which will invoke after successful validation
     // you can watch individual input by pass the name of the input
 
@@ -36,7 +38,11 @@ export default function Quiz() {
         <div>
             {JSON.stringify(data)}
             <QuestionsTable></QuestionsTable>
-            <NewQuestion show={show} handleClose={handleClose}></NewQuestion>
+            <NewQuestion
+                show={show}
+                handleClose={handleClose}
+                qnId={qnId}
+            ></NewQuestion>
             <Button
                 className="float-end"
                 size="lg"

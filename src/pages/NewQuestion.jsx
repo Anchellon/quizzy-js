@@ -4,7 +4,11 @@ import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { DevTool } from "@hookform/devtools";
-export const NewQuestion = ({ show, handleClose }) => {
+import dataSubmissionService from "../services/dataSubmissionService";
+import React, { useState } from "react";
+
+export const NewQuestion = ({ show, handleClose, qnId }) => {
+    const [error, setError] = useState("");
     const reorder = (result) => {
         console.log("results are");
         console.log(result);
@@ -32,8 +36,15 @@ export const NewQuestion = ({ show, handleClose }) => {
         name: "options",
     });
     console.log(fields);
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
+        try {
+            //Making an HTTP request with the credentials saved in the state
+            await dataSubmissionService.submitNewQuestion(data, qnId);
+        } catch (err) {
+            console.log(err);
+            setError("Error in Submitting Data");
+        }
     };
     return (
         <Modal

@@ -11,7 +11,7 @@ export const NewQuizModal = ({ show, handleClose }) => {
     const onSubmit = async (data) => {
         console.log("Posting");
         setSpinner(true);
-        let res = await fetch("http://localhost:3000/catalog/quiz", {
+        let res = await fetch("http://localhost:3000/api/quiz", {
             method: "post",
             mode: "cors",
             headers: {
