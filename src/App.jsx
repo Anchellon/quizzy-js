@@ -1,5 +1,5 @@
 import SharedLayout from "./pages/SharedLayout";
-import Home from "./pages/Home";
+import Home, { loader as quizsInfoLoader } from "./pages/Home";
 import About from "./pages/About";
 import DraggableComponent from "./pages/draggableComponent";
 import DynamicForm from "./pages/DynamicForm";
@@ -14,7 +14,14 @@ import {
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<SharedLayout />}>
-            <Route index element={<Home />} />
+            <Route
+                index
+                element={<Home />}
+                loader={async () => {
+                    let data = await quizsInfoLoader();
+                    return data;
+                }}
+            />
             <Route path="about" element={<About />} />
             <Route
                 path="quiz/:id"

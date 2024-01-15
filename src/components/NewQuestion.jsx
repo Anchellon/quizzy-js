@@ -7,7 +7,7 @@ import { DevTool } from "@hookform/devtools";
 import dataSubmissionService from "../services/dataSubmissionService";
 import React, { useState } from "react";
 
-export const NewQuestion = ({ show, handleClose, qnId }) => {
+export const NewQuestion = ({ show, handleClose, qzId }) => {
     const [error, setError] = useState("");
     const reorder = (result) => {
         console.log("results are");
@@ -40,7 +40,7 @@ export const NewQuestion = ({ show, handleClose, qnId }) => {
         console.log(data);
         try {
             //Making an HTTP request with the credentials saved in the state
-            await dataSubmissionService.submitNewQuestion(data, qnId);
+            await dataSubmissionService.submitNewQuestion(data, qzId);
         } catch (err) {
             console.log(err);
             setError("Error in Submitting Data");
@@ -56,7 +56,7 @@ export const NewQuestion = ({ show, handleClose, qnId }) => {
             <Form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Create Question Setup
+                        Create Question Setup for quizid {qzId}
                         <Form.Control
                             {...register("questionText")}
                             type="text"
@@ -181,7 +181,7 @@ export const NewQuestion = ({ show, handleClose, qnId }) => {
                         Close
                     </Button>
                     <Button variant="primary" type="submit">
-                        Create Quiz
+                        Create Questions
                     </Button>
                 </Modal.Footer>
             </Form>

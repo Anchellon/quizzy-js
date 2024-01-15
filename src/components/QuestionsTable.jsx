@@ -20,15 +20,22 @@ const defaultData = [
 
 const columnHelper = createColumnHelper();
 const columns = [
-    columnHelper.accessor("question", {
+    columnHelper.accessor("qnText", {
         cell: (info) => info.getValue(),
         header: () => "Question",
     }),
-    columnHelper.display({
-        id: "Edit",
-
-        // cell: (props) => <Button>Edit</Button>,
-        cell: () => <Button>Edit</Button>,
+    columnHelper.accessor("_id", {
+        id: "_id",
+        cell: (info) => (
+            <Button
+                onClick={() => {
+                    // populate a modal with the qns
+                }}
+            >
+                Edit
+            </Button>
+        ),
+        header: () => "",
     }),
     columnHelper.display({
         id: "Delete",
@@ -37,8 +44,8 @@ const columns = [
     }),
 ];
 
-export default function QuestionsTable() {
-    const [data] = React.useState(() => [...defaultData]); // data comes from the corresponding quiz
+export default function QuestionsTable({ questions }) {
+    const [data] = React.useState(() => [...questions]); // data comes from the corresponding quiz
     const table = useReactTable({
         data,
         columns,
