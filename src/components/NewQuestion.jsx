@@ -107,7 +107,7 @@ export const NewQuestion = ({ show, handleClose, qzId }) => {
                                                             <input
                                                                 type="radio"
                                                                 {...register(
-                                                                    "isCorrect",
+                                                                    "correctAnswer",
                                                                     {
                                                                         required:
                                                                             {
