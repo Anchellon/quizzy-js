@@ -45,6 +45,7 @@ export const NewQuestion = ({ show, handleClose, qzId }) => {
             console.log(err);
             setError("Error in Submitting Data");
         }
+        location.reload();
     };
     return (
         <Modal
