@@ -11,16 +11,13 @@ export async function loader(id) {
             "Access-Control-Allow-Origin": "*",
         },
     }).then((res) => res.json());
-    const qnInfo = await fetch(
-        `http://localhost:3000/api/quiz/${id}/questions`,
-        {
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-        }
-    ).then((res) => res.json());
+    const qnInfo = await fetch(`http://localhost:3000/api/question/qz/${id}`, {
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+        },
+    }).then((res) => res.json());
     // if (!qzInfo.ok) {
     //     throw {
     //         message: "Failed to fetch quizes",
