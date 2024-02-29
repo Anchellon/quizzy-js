@@ -10,6 +10,8 @@ import {
     RouterProvider,
     Route,
 } from "react-router-dom";
+import StudentHome from "./pages/Student/StudentHome";
+import { Test } from "./pages/Student/Test";
 // import "../server";
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -31,7 +33,18 @@ const router = createBrowserRouter(
                     return data;
                 }}
             />
-            <Route path="test" element={<DynamicForm />} />
+            {/* <Route path="test" element={<DynamicForm />} /> */}
+            <Route path="student">
+                <Route
+                    path=""
+                    element={<StudentHome />}
+                    loader={async () => {
+                        let data = await quizsInfoLoader();
+                        return data;
+                    }}
+                />
+                <Route path="test" element={<Test />} />
+            </Route>
             <Route path="drag" element={<DraggableComponent />} />
         </Route>
     )

@@ -6,11 +6,10 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { QuizConfirmModal } from "./QuizConfirmModal";
 
-export default function QuizzesTable({ quizzes }) {
-    const [data] = React.useState(() => [...quizzes]);
-
+export default function AvailableQuizzesTable({ quizzes, handleShow }) {
     const columnHelper = createColumnHelper();
     const columns = [
         columnHelper.accessor("name", {
@@ -22,24 +21,28 @@ export default function QuizzesTable({ quizzes }) {
         columnHelper.accessor("_id", {
             id: "_id",
             cell: (info) => (
-                <Link to={"/quiz/" + info.getValue()}>
-                    <Button>View/edit</Button>
-                </Link>
+                // work needed here to take it to quzi attempt page
+                // confirming first
+
+                <Button
+                    onClick={() => {
+                        handleShow();
+                    }}
+                >
+                    Take Quiz
+                </Button>
             ),
             header: () => "",
         }),
-        columnHelper.display({
-            id: "Delete",
-            // cell: (props) => <Button variant="danger">Delete</Button>,
-            cell: () => <Button variant="danger">Delete</Button>,
-        }),
     ];
 
+    const [data] = React.useState(() => [...quizzes]);
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
+
     return (
         <div className="my-5 p-2 border">
             <table className="table table-striped table-hover">
@@ -75,9 +78,6 @@ export default function QuizzesTable({ quizzes }) {
                 </tbody>
             </table>
             <div className="h-4" />
-            {/* <button onClick={() => rerender()} className="border p-2">
-            Rerender
-          </button> */}
         </div>
     );
 }
