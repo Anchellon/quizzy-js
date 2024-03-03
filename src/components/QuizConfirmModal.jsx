@@ -3,8 +3,9 @@ import { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-export const QuizConfirmModal = ({ show, handleClose }) => {
+export const QuizConfirmModal = ({ show, handleClose, quizID }) => {
     const navigate = useNavigate();
+    console.log(quizID);
     return (
         <div>
             <Modal show={show} onHide={handleClose}>
@@ -15,7 +16,7 @@ export const QuizConfirmModal = ({ show, handleClose }) => {
                 <Modal.Footer>
                     <Button
                         onClick={() => {
-                            navigate("/student/test");
+                            navigate(`/student/test/${quizID}`);
                         }}
                     >
                         Yes

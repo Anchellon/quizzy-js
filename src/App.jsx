@@ -11,7 +11,7 @@ import {
     Route,
 } from "react-router-dom";
 import StudentHome from "./pages/Student/StudentHome";
-import { Test } from "./pages/Student/Test";
+import Test, { loader as testLoader } from "./pages/Student/Test";
 // import "../server";
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -43,7 +43,15 @@ const router = createBrowserRouter(
                         return data;
                     }}
                 />
-                <Route path="test" element={<Test />} />
+
+                <Route
+                    path="test/:id"
+                    element={<Test />}
+                    loader={async ({ params }) => {
+                        let data = await testLoader(params.id);
+                        return data;
+                    }}
+                />
             </Route>
             <Route path="drag" element={<DraggableComponent />} />
         </Route>

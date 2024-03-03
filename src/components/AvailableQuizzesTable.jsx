@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
     createColumnHelper,
     flexRender,
@@ -9,7 +10,11 @@ import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { QuizConfirmModal } from "./QuizConfirmModal";
 
-export default function AvailableQuizzesTable({ quizzes, handleShow }) {
+export default function AvailableQuizzesTable({ quizzes }) {
+    const [show, setShow] = useState(false);
+    const [quizID, setQuizID] = useState();
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const columnHelper = createColumnHelper();
     const columns = [
         columnHelper.accessor("name", {
@@ -26,6 +31,7 @@ export default function AvailableQuizzesTable({ quizzes, handleShow }) {
 
                 <Button
                     onClick={() => {
+                        setQuizID(info.getValue());
                         handleShow();
                     }}
                 >
@@ -44,40 +50,48 @@ export default function AvailableQuizzesTable({ quizzes, handleShow }) {
     });
 
     return (
-        <div className="my-5 p-2 border">
-            <table className="table table-striped table-hover">
-                <thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <tr key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <th key={header.id} className="col-11">
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                              header.column.columnDef.header,
-                                              header.getContext()
-                                          )}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody>
-                    {table.getRowModel().rows.map((row) => (
-                        <tr key={row.id}>
-                            {row.getVisibleCells().map((cell) => (
-                                <td key={cell.id}>
-                                    {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext()
-                                    )}
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div className="h-4" />
-        </div>
+        <>
+            <div className="my-5 p-2 border">
+                <table className="table table-striped table-hover">
+                    <thead>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <tr key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <th key={header.id} className="col-11">
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                  header.column.columnDef
+                                                      .header,
+                                                  header.getContext()
+                                              )}
+                                    </th>
+                                ))}
+                            </tr>
+                        ))}
+                    </thead>
+                    <tbody>
+                        {table.getRowModel().rows.map((row) => (
+                            <tr key={row.id}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <td key={cell.id}>
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext()
+                                        )}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <div className="h-4" />
+            </div>
+            <QuizConfirmModal
+                show={show}
+                handleClose={handleClose}
+                quizID={quizID}
+            ></QuizConfirmModal>
+        </>
     );
 }
