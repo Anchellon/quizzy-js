@@ -17,5 +17,5 @@ export async function loader(id) {
 export default function Test() {
     const testInfo = useLoaderData();
 
-    return <div>{JSON.stringify(testinfo)}</div>;
+    return <div>{JSON.stringify(testInfo)}</div>;
 }
