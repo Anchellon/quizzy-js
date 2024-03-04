@@ -1,5 +1,6 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
+import { Questions } from "../../components/Questions";
 export async function loader(id) {
     const testInfo = await fetch(
         `http://localhost:3000/api/quiz/student/${id}`,
@@ -16,6 +17,12 @@ export async function loader(id) {
 
 export default function Test() {
     const testInfo = useLoaderData();
-
-    return <div>{JSON.stringify(testInfo)}</div>;
+    const quiz = testInfo.quiz.name;
+    const questions = testInfo.questions;
+    return (
+        <>
+            <h1>{quiz}</h1>
+            <Questions questions={questions}></Questions>
+        </>
+    );
 }
